@@ -9,7 +9,8 @@ Description: |
   WebServerASG Auto Scaling Group is using the WebServerLT Launch Template in order to spin up instances needed.
   WebServerLT Launch Template is configured to prepare Python Flask environment on EC2,
   and to deploy Phonebook Application on Flask Server after downloading the app code from Github repository.
-
+  
+ 
 Resources:
   WebServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -24,7 +25,7 @@ Resources:
            FromPort: 80
            ToPort: 80
            SourceSecurityGroupId: !GetAtt ALBSecurityGroup.GroupId
-  
+
   ALBSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -34,14 +35,14 @@ Resources:
           FromPort: 80
           ToPort: 80
           CidrIp: 0.0.0.0/0
-  
+
   WebServerLT:
     Type: AWS::EC2::LaunchTemplate
     Properties:
       LaunchTemplateData: 
         ImageId: ami-0947d2ba12ee1ff75
         InstanceType: t2.micro
-        KeyName: veysel
+        KeyName: serdar
         SecurityGroupIds: 
           - !GetAtt WebServerSecurityGroup.GroupId
         TagSpecifications: 
@@ -59,8 +60,8 @@ Resources:
                 pip3 install flask
                 pip3 install flask_mysql
                 echo "${MyDBURI}" > /home/ec2-user/dbserver.endpoint
-                TOKEN="587d908392ad41584aa7a012bd6a43ca69081df1"
-                FOLDER="https://$TOKEN@raw.githubusercontent.com/veyseltech2020/aws/main/projects/004-phonebook-web-application/phonebook-app.py/master/"
+                TOKEN="94eddca57871d6cbcb24babb5e0ff31f30226804"
+                FOLDER="https://$TOKEN@raw.githubusercontent.com/serdarcw/004-Phonebook-web-app-EU/master/"
                 curl -s --create-dirs -o "/home/ec2-user/templates/index.html" -L "$FOLDER"templates/index.html
                 curl -s --create-dirs -o "/home/ec2-user/templates/add-update.html" -L "$FOLDER"templates/add-update.html
                 curl -s --create-dirs -o "/home/ec2-user/templates/delete.html" -L "$FOLDER"templates/delete.html
@@ -77,7 +78,7 @@ Resources:
       UnhealthyThresholdCount: 3
       HealthyThresholdCount: 2
       VpcId: !GetAtt WebServerSecurityGroup.VpcId
-  
+    
   ApplicationLoadBalancer:
     Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
     Properties:
@@ -86,14 +87,14 @@ Resources:
       SecurityGroups:
         - !GetAtt ALBSecurityGroup.GroupId
       Subnets:
-        - subnet-1f973679
-        - subnet-2ac8b967
-        - subnet-5d258702
-        - subnet-6d4abf5c
-        - subnet-af21baa1
-        - subnet-b5d47b94
+        - subnet-077c9758
+        - subnet-3246e63c
+        - subnet-3ccd235a
+        - subnet-8d8dbfb3
+        - subnet-c41ba589
+        - subnet-ed49bccc
       Type: application
-   
+
   ALBListener:
     Type: "AWS::ElasticLoadBalancingV2::Listener"
     Properties:
@@ -103,7 +104,7 @@ Resources:
       LoadBalancerArn: !Ref ApplicationLoadBalancer #required
       Port: 80 #required
       Protocol: HTTP #required
-
+  
   WebServerASG:
     Type: "AWS::AutoScaling::AutoScalingGroup"
     Properties:
@@ -118,37 +119,38 @@ Resources:
       MaxSize: 3 #required
       MinSize: 1 #required
       TargetGroupARNs:
-       - !Ref WebServerTG
-      
+        - !Ref WebServerTG
+
   MyDBSecurityGroup:
-    Type: "AWS::RDS::DBSecurityGroup"
+    Type: AWS::RDS::DBSecurityGroup
     Properties:
       GroupDescription: Front-end access
-      DBSecurityGroupIngress: #required
+      DBSecurityGroupIngress:
         - CIDRIP: 0.0.0.0/0
-        - Ec2SecurityGroupId: !GetAtt WebServerSecurityGroup.GroupId
-  
+        - EC2SecurityGroupId: !GetAtt WebServerSecurityGroup.GroupId
+
   MyDatabaseServer:
-    Type: "AWS::RDS::DBInstance"
+    Type: AWS::RDS::DBInstance
     DeletionPolicy: Delete
     Properties:
       AllocatedStorage: 20
-      AllowMajorVersionUpgrade: false
+      AllowMajorVersionUpgrade: false 
       AutoMinorVersionUpgrade: true
       BackupRetentionPeriod: 0
       DBInstanceIdentifier: phonebook-app-db2
       DBName: phonebook
-      DBSecurityGroups:
+      DBSecurityGroups: 
         - !Ref MyDBSecurityGroup
       Engine: MySQL
       DBInstanceClass: db.t2.micro #Required
       EngineVersion: 8.0.19
       MasterUsername: admin
-      MasterUserPassword: veysel-10
+      MasterUserPassword: Serdar_1
       MultiAZ: false
       Port: 3306
       PubliclyAccessible: true
 
+ 
 Outputs:
   WebsiteURL:
     Value: !Sub 
