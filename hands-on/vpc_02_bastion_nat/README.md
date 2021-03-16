@@ -1,6 +1,6 @@
-## Part 2 - Creating Bastion Host and connect to the private subnet from internet
+## Part 2 - Creating Bastion Host and CONNECT to the private subnet from internet
 
-- discuss about how to connect to the "clarus-az1a-private-subnet" instance
+- discuss about how to connect to the "my-private-subnet-AZ1a" instance
 
 - Explain logic of why we need Bastion Host?
 
@@ -11,15 +11,15 @@
 ```text
 AMI             : Amazon Linux 2
 Instance Type   : t2.micro
-Network         : clarus-vpc-a
-Subnet          : clarus-az1a-public-subnet
+Network         : my_first_VPC
+Subnet          : my-public-subnet-AZ1a
 Security Group  : 
-    Sec.Group Name : Public Sec.group
+    Sec.Group Name : Public_Sec_Grp
     Rules          : TCP --- > 22 ---> Anywhere
                    : All ICMP IPv4  ---> Anywhere
 Tag             :
     Key         : Name
-    Value       : Public EC2 (Bastion Host)
+    Value       : Public-(Bastion Host)-EC2
 ```
 
 - Configure Private instance.
@@ -27,10 +27,10 @@ Tag             :
 ```text
 AMI             : Amazon Linux 2
 Instance Type   : t2.micro
-Network         : clarus-vpc-a
-Subnet          : clarus-az1a-private-subnet
+Network         : my_first_VPC
+Subnet          : my-private-subnet-AZ1a
 Security Group  : 
-    Sec.Group Name : Private Sec.group
+    Sec.Group Name : Private_Sec_Grp
     Rules          : TCP --- > 22 ---> Anywhere
 Tag             :
     Key         : Name
@@ -43,7 +43,7 @@ Rules        : TCP --- > 22 ---> Anywhere
                 |         |         |
                 |         |         |
                 V         V         V
-               TCP --- > 22 ---> Public Sec.Group
+               TCP --- > 22 ---> Public_Sec_Grp
 ``` 
 - Try to connect private instance via ssh
   (As you see in the dashboard there is no public IP for instance)
@@ -90,7 +90,7 @@ Network border Group : Keep it as is (us-east-1)
 
 Amazon's pool of IPv4 addresses
 ```
-- Click Allocate button and name it as "First Elastic IP"
+- Click Allocate button and name it as "my_first_ElasticIP"
 
 - create a NAT Gateway in the public subnet
 
@@ -100,11 +100,11 @@ STEP 2: Create Nat Gateway
 
 - Click Create Nat Gateway button 
 ```bash
-Name                      : clarus-nat-gateway
+Name                      : my-NAT-gateway
 
-Subnet                    : clarus-az1a-public-subnet
+Subnet                    : my-public-subnet-AZ1a
 
-Elastic IP allocation ID  : First Elastic IP
+Elastic IP allocation ID  : my_first_ElasticIP
 ```
 - click "create Nat Gateway" button
 
@@ -112,10 +112,10 @@ STEP 3 : Modify Route Table of Private Instance's Subnet
 
 - Go to VPC console on left hand menu and select Route Table tab
 
-- Select "clarus-private-rt" ---> Routes ----> Edit Rule ---> Add Route
+- Select "my-private-RT" ---> Routes ----> Edit Rule ---> Add Route
 ```
 Destination     : 0.0.0.0/0
-Target ----> Nat Gateway ----> clarus-nat-gateway
+Target ----> Nat Gateway ----> my-NAT-gateway
 ```
 - click save routes
 
@@ -125,11 +125,11 @@ Target ----> Nat Gateway ----> clarus-nat-gateway
 
 - Go to VPC console on left hand menu and select Nat Gateway tab
 
-- Select clarus-nat-gateway --- > Actions ---> delete Nat Gateway
+- Select my-NAT-gateway --- > Actions ---> delete Nat Gateway
 
 - Go to VPC console on left hand menu and select Elastic IP tab
 
-- Select "First Elastic IP" ----> Actions ----> Release Elastic IP Address ----> Release 
+- Select "my_first_ElasticIP" ----> Actions ----> Release Elastic IP Address ----> Release 
 
 ### Part 4 - Creating NAT Instance
 
@@ -140,16 +140,16 @@ STEP 1: Create NAT Instance
 ```text
 AMI             : ami-00a9d4a05375b2763 (Nat Instance)
 Instance Type   : t2.micro
-Network         : clarus-vpc-a
-Subnet          : clarus-az1a-public-subnet
+Network         : my_first_VPC
+Subnet          : my-public-subnet-AZ1a
 Security Group  : 
-    Sec.Group Name : Public Sec.group
+    Sec.Group Name : Public_Sec_Grp
     Rules          : TCP ---> 22 ---> Anywhere
                    : All ICMP IPv4  ---> Anywhere
 
 Tag             :
     Key         : Name
-    Value       : Clarus NAT Instance
+    Value       : my-NAT-Instance
 ```
 
 - Select created Nat Instance on EC2 list
@@ -160,7 +160,7 @@ Tag             :
 
 STEP 2: Configuring the Route Table
 
-- Go to Route Table and select "clarus-private-rt"
+- Go to Route Table and select "my-private-RT"
 
 - Select Routes sub-menu ----> Edit Rules ----> Delete blackhole for Nat Gateway
 
