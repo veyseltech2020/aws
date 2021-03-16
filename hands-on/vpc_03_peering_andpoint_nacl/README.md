@@ -5,11 +5,11 @@
 ## STEP 1 : Prep---> Launching Instances
 
 
-- Launch two Instances. First instance will be in "clarus-az1a-private-subnet" of "clarus-vpc-a",and the other one will be in your "Default VPC". 
+- Launch two Instances. First instance will be in "my-private-subnet-AZ1a" of "my_first_VPC",and the other one will be in your "Default VPC". 
 
 - In addition, since the private EC2 needs internet connectivity to set user data, we also need NAT Gateway.
 
-### A. Configure Public Windows instance in **Default VPC.
+### A. Configure Public WINDOWS instance in **Default VPC.
 
 ```text
 AMI             : Microsoft Windows Server 2019 Base
@@ -17,7 +17,7 @@ Instance Type   : t2.micro
 Network         : **Default VPC
 Subnet          : Default Public Subnet
 Security Group  : 
-    Sec.Group Name : WindowsSecGrb
+    Sec.Group Name : Windows_Sec_GrP
     Rules          : RDP --- > 3389 ---> Anywhere
 Tag             :
     Key         : Name
@@ -25,10 +25,10 @@ Tag             :
 
 PS: For MAC, "Microsoft Remote Desktop" program should be installed on the computer.
 ```
-### B. Since we need http connection we need to change Private Sec.Grb.
+### B. Since we need http connection we need to change Private_Sec_Grp
 
 Security Group    : 
-    Sec.Group Name : Private Sec.group
+    Sec.Group Name : Private_Sec_Grp
     Rules          : All Traffic ---> 0.0.0.0.0/0
 
 ### C. Since the private EC2 needs internet connectivity to set user data, we use NAT Gateway
@@ -38,11 +38,11 @@ Security Group    :
 - click Create NAT Gateway.
 
 ```bash
-Name                      : clarus-nat-gateway-2
+Name                      : my-NAT-gateway-2
 
-Subnet                    : clarus-az1a-public-subnet
+Subnet                    : my-public-subnet-AZ1a
 
-Elastic IP allocation ID  : Second Elastic IP
+Elastic IP allocation ID  : my-Second-ElasticIP
 ```
 - click "Create Nat Gateway" button
 
@@ -50,23 +50,23 @@ Elastic IP allocation ID  : Second Elastic IP
 
 - Go to VPC console on left hand menu and select Route Table tab
 
-- Select "clarus-private-rt" ---> Routes ----> Edit Rule ---> Add Route
+- Select "my-private-RT" ---> Routes ----> Edit Rule ---> Add Route
 ```
 Destination     : 0.0.0.0/0
-Target ----> Nat Gateway ----> clarus-nat-gateway-2
+Target ----> Nat Gateway ----> my-NAT-gateway-2
 ```
 - click save routes
 
 WARNING!!! ---> Be sure that NAT Gateway is in active status. Since the private EC2 needs internet connectivity to set user data, NAT Gateway must be ready.
 
-### E. Configure Private instance in 'clarus-az1a-private-subnet' of 
-'clarus-vpc-a'.
+### E. Configure Private instance in 'my-private-subnet-AZ1a' of 
+'my_first_VPC'.
 
 ```text
 AMI             : Amazon Linux 2
 Instance Type   : t2.micro
-Network         : clarus-vpc-a 
-Subnet          : clarus-az1a-private-subnet
+Network         : my_first_VPC 
+Subnet          : my-private-subnet-AZ1a
 user data       : 
 
 #!/bin/bash
@@ -82,7 +82,7 @@ wget https://raw.githubusercontent.com/awsdevopsteam/route-53/master/ken.jpg
 service nginx start
 
 Security Group    : 
-    Sec.Group Name : Private Sec.group
+    Sec.Group Name : Private_Sec_Grp
     
 Tag             :
     Key         : Name
@@ -110,27 +110,27 @@ Tag             :
 - Push "Create Peering Connection" button
 
 ```text
-Peering connection name tag : First Peering
+Peering connection name tag : my First Peering
 VPC(Requester)              : Default VPC
 Account                     : My Account
 Region                      : This Region (us-east-1)
-VPC (Accepter)              : Clarus-vpc-a
+VPC (Accepter)              : my_first_VPC
 ```
 - Hit "Create peering connection" button
 
-- Select 'First Peering' ----> Action ---> Accept Request ----> Accept Request
+- Select 'my First Peering' ----> Action ---> Accept Request ----> Accept Request
 
 - Go to route Tables and select default VPC's route table ----> Routes ----> Edit routes
 ```
-Destination: paste "clarus-vpc-a" CIDR blok
-Target ---> peering connection ---> select 'First Peering' ---> Save routes
+Destination: paste "my_first_VPC" CIDR blok
+Target ---> peering connection ---> select 'my First Peering' ---> Save routes
 ```
 
-- select clarus-private-rt's route table ----> Routes ----> 
+- select my-private-RT's route table ----> Routes ----> 
 Edit routes
 ```
 Destination: paste "default VPC" CIDR blok
-Target ---> peering connection ---> select 'First Peering' ---> Save routes
+Target ---> peering connection ---> select 'my First Peering' ---> Save routes
 ```
 
 - Go to windows EC2 named 'Windows public', write IP address on browser and show them to website with KEN..
@@ -144,14 +144,14 @@ WARNING!!! ---> Please do not terminate "NAT Gateway" and "Private WEB EC2" for 
 # STEP 1: Prep
 
 Security Group    : 
-    Sec.Group Name : Private Sec.group
-    Rules          : All Traffic ---> Public Sec.Grb
+    Sec.Group Name : Private_Sec_Grp
+    Rules          : All Traffic ---> Public_Sec_Grp
 
 
 ### A. Create S3 Bucket 
 
 - Go to the S3 service on AWS console
-- Create a bucket of `clarusway-vpc-endpoint` with following properties, 
+- Create a bucket of `my-vpc-endpoint` with following properties, 
 
 ```text
 Versioning                  : Disabled
@@ -170,8 +170,8 @@ Block all public access     : unchecked
 ```text
 AMI             : Amazon Linux 2
 Instance Type   : t2.micro
-Network         : clarus-vpc-a
-Subnet          : clarus-az1b-public-subnet
+Network         : my_first_VPC
+Subnet          : my-public-subnet-AZ1b
 Security Group  : 
     Sec.Group Name : Public Sec.Group
     Rules          : TCP --- > 22 ---> Anywhere
@@ -179,7 +179,7 @@ Security Group  :
                      HTTp--------> Anywhere
 Tag             :
     Key         : Name
-    Value       : Public EC2 (Bastion Host)
+    Value       : Public-(Bastion Host)-EC2
 ```
 
 ### C. Create IAM role to reach S3 from "Private WEB EC2"
@@ -190,19 +190,19 @@ Tag             :
 ```
 use case : EC2 ---> Next : Permission
 Policy ---> "AmazonS3FullAccess" ---> Next
-Role Name : clarusS3FullAccessforEndpoint
-Role escription: clarus S3 Full Access for Endpoint
+Role Name : MYS3FullAccessforEndpoint
+Role escription: MY S3 Full Access for Endpoint
 click create button
 ```
 Go to EC2 service from AWS console
 
-Select "Private WEB EC2" ---> Actions ---> Instance Settings ---> Attach/Replace IAM Role select newly created IAM role named 'clarusS3FullAccessforEndpoint' ---> Apply
+Select "Private WEB EC2" ---> Actions ---> Instance Settings ---> Attach/Replace IAM Role select newly created IAM role named 'MYS3FullAccessforEndpoint' ---> Apply
 
 # STEP 2: Connect S3 Bucket from Private WEB Instance
 
 ### A. Connect to the Bastion host
 
-- Go to terminal and connect to the Bastion host named 'Public EC2 (Bastion Host)'
+- Go to terminal and connect to the Bastion host named 'Public-(Bastion Host)-EC2'
 
 - Using Bastion host connect to the EC2 instance in "private subnet" named 'Private WEB EC2 ' (using ssh agent or copying directly pem key into the EC2)
 
@@ -233,13 +233,13 @@ ssh ec2-user@[Your private EC2 private IP]
 ```
 ### C. Use CLI to verify connectivity
 
-- list the bucket in S3 and content of S3 bucket named "aws s3 ls "clarusway-vpc-endpoint" via following command
+- list the bucket in S3 and content of S3 bucket named "aws s3 ls "my-vpc-endpoint" via following command
 
 ```
 aws s3 ls
-aws s3 ls clarusway-vpc-endpoint
+aws s3 ls my-vpc-endpoint
 ```
-- go to private route table named "clarus-private-rt" on VPC service
+- go to private route table named "my-private-RT" on VPC service
 
 - select routes sub-menu ---> Edit routes ---> Delete "Peering and NAT Gateway"
 
@@ -260,26 +260,26 @@ aws s3 ls
 ```text
 Service Category : AWS services
 Service Name     : com.amazonaws.us-east-1.s3
-VPC              : clarus-vpc-a
+VPC              : my_first_VPC
 Route Table      : choose private one or both 
 ```
 - Create Endpoint
 
-- Go to private route table named 'clarus-private-rt' and show the endpoint rule that is automatically created by AWS 
+- Go to private route table named 'my-private-RT' and show the endpoint rule that is automatically created by AWS 
 
 ### B. Connect  to S3 via Endpoint
 
 - Go to terminal, list the buckets in S3 and content of S3 bucket named "aws s3 ls 
-"clarusway-vpc-endpoint" via following command
+"my-vpc-endpoint" via following command
 ```bash
 aws s3 ls
-aws s3 ls clarusway-vpc-endpoint
+aws s3 ls my-vpc-endpoint
 ```
 
 - copy the 'Guile.png' and 'Honda.png' files from S3 bucket into the private EC2
 ```bash
-aws s3 cp s3://clarusway-vpc-endpoint/Guile.png .
-aws s3 cp s3://clarusway-vpc-endpoint/Honda.png .
+aws s3 cp s3://my-vpc-endpoint/Guile.png .
+aws s3 cp s3://my-vpc-endpoint/Honda.png .
 ```
 
 ## Part 7 - Configuring NACL
@@ -290,8 +290,8 @@ aws s3 cp s3://clarusway-vpc-endpoint/Honda.png .
 
 - click 'Create Network ACL' button
 ```
-Name Tag      :clarus-private1a-nacl
-VPC           :clarus-vpc-a
+Name Tag      :my-private1a-nacl
+VPC           :my_first_VPC
 ```
 - Select Inbound Rules ---> Edit Inbound rules ---> Add Rule
 ```text
@@ -307,7 +307,7 @@ VPC           :clarus-vpc-a
   200         All ICMP - IPv4   ICMP(1)       ALL               0.0.0.0/0         Deny
 ```
 
-- In the  NACL menu, select Subnet associations sub-menu ---> Edit subnet association ---> select "clarus-az1a-private-subnet" ---> edit
+- In the  NACL menu, select Subnet associations sub-menu ---> Edit subnet association ---> select "my-private-subnet-AZ1a" ---> edit
 
 ## Step 2 :
 
@@ -343,7 +343,7 @@ ssh ec2-user@[Your private EC2 private IP]
 ping [private EC2 Ip Address]
 ```
 
-- go to the NACL table named "clarus-private1a-nacl"
+- go to the NACL table named "my-private1a-nacl"
 
 - Select Outbound Rules ---> Edit Inbound rules ---> Add Rule
 
