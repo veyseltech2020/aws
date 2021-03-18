@@ -147,10 +147,10 @@ CREATE DATABASE clarusway;
 
 
 # 22. Create a user named "admin"; 
-CREATE USER admin IDENTIFIED BY '123456789';
+CREATE USER admin IDENTIFIED BY '1234567890';
 
 # 23. Grant permissions to the user "admin" for database "clarusway"
-GRANT ALL ON clarusway.* TO admin IDENTIFIED BY '123456789' WITH GRANT OPTION;  
+GRANT ALL ON clarusway.* TO admin IDENTIFIED BY '1234567890' WITH GRANT OPTION;  
 
 # 24. Update privileges
 FLUSH PRIVILEGES;

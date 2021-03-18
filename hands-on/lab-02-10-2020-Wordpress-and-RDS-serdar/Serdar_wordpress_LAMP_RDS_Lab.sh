@@ -8,7 +8,7 @@
 
 # 2.Create RDS mysql instance.
 Master username: admin
-Password: Clarusway_1
+Password: 1234567890
 
 # 3.Create EC2 that is installed LAMP with user data seen below for Wordpress app.
 
@@ -75,10 +75,10 @@ CREATE DATABASE clarusway;
 SHOW DATABASES;
 
 # 17. Create a user named "admin"; 
-CREATE USER admin IDENTIFIED BY 'Clarusway_1';
+CREATE USER admin IDENTIFIED BY '1234567890';
 
 # 18. Grant permissions to the user "admin" for database "clarusway"
-GRANT ALL ON clarusway.* TO admin IDENTIFIED BY 'Clarusway_1' WITH GRANT OPTION;  
+GRANT ALL ON clarusway.* TO admin IDENTIFIED BY '1234567890' WITH GRANT OPTION;  
 
 # 19. Update privileges
 FLUSH PRIVILEGES;

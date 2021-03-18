@@ -32,7 +32,7 @@ STEP 1 : Prep - Creating S3 Bucket
 
 - Go to S3 menu using AWS console
 
-- Create a bucket of `clarusway.source.lambda` with following properties,
+- Create a bucket of `veysel.source.lambda` with following properties,
 
 ```text
 Region                      : US East (N.Virginia)
@@ -48,7 +48,7 @@ Block all public access     : Checked (Not Public)
 PS: Please, do not forget to select "US East (N.Virginia)" as Region
 ```
 
-- Create another bucket of `clarusway.destination.lambda` with following properties,
+- Create another bucket of `veysel.destination.lambda` with following properties,
 
 ```text
 Region                      : US East (N.Virginia)
@@ -122,7 +122,7 @@ s3_client = boto3.client("s3")
 
 
 def lambda_handler(event, context):
-   destination_bucket_name = 'clarusway.destination.lambda'
+   destination_bucket_name = 'veysel.destination.lambda'
 
    # event contains all information about uploaded object
    print("Event :", event)

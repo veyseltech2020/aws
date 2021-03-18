@@ -41,7 +41,7 @@ At the end of the this hands-on training, students will be able to;
 Region: "N.Virginia"
 VPC: Default VPC
 Subnet: PublicA
-Sec Group: "Route 53 Sec"
+Sec Group: "Route-53-Sec-Grp"
 
 user data: 
 
@@ -64,7 +64,7 @@ systemctl enable httpd
 Region: "N.Virginia"
 VPC: Default VPC
 Subnet: PublicA
-Sec Group: "Route 53 Sec"
+Sec Group: "Route-53-Sec-Grp"
 
 user data:
 
@@ -87,7 +87,7 @@ systemctl enable httpd
 Region: "N.Virginia"
 VPC: Default VPC
 Subnet: PublicA
-Sec Group: "Route 53 Sec"
+Sec Group: "Route-53-Sec-Grp"
 
    "user data:"
 
@@ -109,7 +109,7 @@ systemctl enable httpd
 Region: "N.Virginia"
 VPC: Default VPC
 Subnet: PublicA
-Sec Group: "Route 53 Sec"
+Sec Group: "Route-53-Sec-Grp"
 
 user data:
 
@@ -142,7 +142,7 @@ systemctl enable httpd
             "Effect": "Allow",
             "Principal": "*",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::don't forget to change me/*"
+            "Resource": "arn:aws:s3:::don't forget to change me(write your own arn instead)/*"
         }
     ]
 }
@@ -166,7 +166,7 @@ systemctl enable httpd
             "Effect": "Allow",
             "Principal": "*",
             "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::don't forget to change me/*"
+            "Resource": "arn:aws:s3:::don't forget to change me(write your own arn instead)/*"
         }
     ]
 }
