@@ -33,7 +33,7 @@ At the end of the this hands-on training, students will be able to;
 
 - Open S3 Service from AWS Management Console.
 
-- Create a bucket of `clarusway-storage-yournumber` with following properties, 
+- Create a bucket of `veysel-storage-E2509` with following properties, 
 
 ```text
 Versioning                  : Disabled
@@ -82,7 +82,7 @@ PERMISSIONS >> BLOCK PUBLIC ACCESS>>>> EDIT>>> UNCHECKED
 
 - Open the file URL in the browser, show it is accessible now.
 
-- Upload `cat2.jpg` and `cat3.jpg` files under `clarusway-storage` bucket.
+- Upload `cat2.jpg` and `cat3.jpg` files under `veysel-storage` bucket.
 
 - Show how to use `move` function to transfer data under `images` folder.
 
@@ -116,7 +116,7 @@ delete ---> images
 
 ![S3 Bucket with webserver](./S3.png)
 
-- Create a new bucket for website logging with name of `log.pet.clarusway.static.web.hosting` and with following properties.
+- Create a new bucket for website logging with name of `veysel.log.pet.static.web.hosting` and with following properties.
 
 ```text
 Versioning                  : Disabled
@@ -129,7 +129,7 @@ Object lock                 : Disabled
 Allow all public access     : Checked (KEEP BlOCKED)
 ```
 
-- Create a new bucket for static website with name of `pet.clarusway.static.web.hosting` and with following properties
+- Create a new bucket for static website with name of `veysel.pet.static.web.hosting` and with following properties
 
 ```text
 Versioning                : ENABLED
@@ -143,14 +143,14 @@ Object lock               : Disabled
 Allow all public access   : Checked (KEEP BlOCKED)
 ```
 
-- Click the S3 bucket `pet.clarusway.static.web.hosting` and upload following files.
+- Click the S3 bucket `veysel.pet.static.web.hosting` and upload following files.
 
 ```text
 index.html
 cat.jpg
 ```
 
-- Show static website hosting settings from properties of `pet.clarusway.static.web.hosting` bucket.
+- Show static website hosting settings from properties of `veysel.pet.static.web.hosting` bucket.
 
 ```
 PROPERTIES>>>>> STATIC WEBSITE HOSTING
@@ -184,7 +184,7 @@ PERMISSIONS >> BLOCK PUBLIC ACCESS>>>> EDIT>>> UNCHECKED
 
 - Open static website URL in browser and show its working.
 
-- Create folder called `kitten` under the bucket named `pet.clarusway.static.web.hosting`.
+- Create folder called `kitten` under the bucket named `veysel.pet.static.web.hosting`.
 
 - Move the `index.html` and `cat.jpg` into the `kitten` folder. 
 
@@ -214,7 +214,7 @@ http://.......amazonaws.com/kitten/
 
 ## Part 3 - Creating S3 Bucket with Versioning
 
-- Create a new bucket named `pet.clarusway.versioning` with following properties.
+- Create a new bucket named `veysel.pet.versioning` with following properties.
 
 ```text
 Versioning                : ENABLE
@@ -228,14 +228,14 @@ Object lock               : Disabled
 Allow all public access   : UNCHECKED(PUBLIC) and Acknowledge the warning. 
 ```
 
-- Click the S3 bucket `pet.clarusway.versioning` and upload following files.
+- Click the S3 bucket `veysel.pet.versioning` and upload following files.
 
 ```text
 index.html
 cat.jpg
 ```
 
-- Show static website hosting settings from properties of `pet.clarusway.versioning` bucket.
+- Show static website hosting settings from properties of `veysel.pet.versioning` bucket.
 ```
 PROPERTIES>>>>> STATIC WEBSITE HOSTING
 ```
@@ -260,7 +260,7 @@ PROPERTIES>>>>> STATIC WEBSITE HOSTING
 
 - Open static website URL in browser and show its working.
 
-- Show versioning of the files right under the bucket `pet.clarusway.versioning`
+- Show versioning of the files right under the bucket `veysel.pet.versioning`
 
 - Delete `index.html`.
 
@@ -308,4 +308,4 @@ PROPERTIES>>>>> STATIC WEBSITE HOSTING
 
 ## Part 4 - Logging 
 
-- Open `log.pet.clarusway.static.web.hosting` bucket and show logging of "pet.clarusway.versioning" and "pet.clarusway.static.web.hosting"
+- Open `veysel.log.pet.static.web.hosting` bucket and show logging of "veysel.pet.versioning" and "veysel.pet.static.web.hosting"
