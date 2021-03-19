@@ -58,15 +58,15 @@ At the end of the this hands-on training, students will be able to;
 
 Select resource type : Instance
 Instance ID          : Select the instance ID of Nginx
-Name                 : Instance-Snapshot_First
+Name                 : my-Instance-Snapshot
 
 4. Click create snapshot.
 
 5. Click snapshot `Action` menu and select `create image`
 
 
-Name        : ClaruswayAMI_1
-Description : ClaruswayAMI_1
+Name        : My-AMI_1
+Description : My-AMI_1
 
 
 6. Click the `launch instance` tab.
@@ -92,21 +92,21 @@ Description : ClaruswayAMI_1
 
 16. Select image >> create image.
 
-Name        : ClaruswayAMI_2
-Description : ClaruswayAMI_2
+Name        : MY-AMI_2
+Description : MY-AMI_2
 
 
-17. Click AMI section from left hand menu and show `ClaruswayAMI_2`
+17. Click AMI section from left hand menu and show `MY-AMI_2`
 
 18. After ClaruswayAMI creation process is completed, click snapshot section from left-hand menu.
 
-19. Show that AWS has created a new snapshot for newly created `ClaruswayAMI_2` image.
+19. Show that AWS has created a new snapshot for newly created `MY-AMI_2` image.
 
 20. Click the `launch instance` tab.
 
 21. Click `myAMI` from left-hand menu.
 
-22. Select `ClaruswayAMI_2`.
+22. Select `MY-AMI_2`.
 
 23. Show that security group rules (SSH, HTTP) and `user data` same as original EC2 Nginx instance.
 
@@ -129,14 +129,14 @@ Instance ID : select the root volume of the SampleInstance
 29. Click create snapshot.
 
 
-Name        : ClaruswayAMI_3
-Description : ClaruswayAMI_3
+Name        : my-AMI_3
+Description : my-AMI_3
 
 30. Click the `launch instance` tab.
 
 31. Click `myAMI` from left-hand menu.
 
-32. Select `ClaruswayAMI_3`.
+32. Select `my-AMI_3`.
 
 33. Show that security group rules (SSH, HTTP) and `user data` same as original EC2 Nginx instance.
 
@@ -168,24 +168,24 @@ ls
 43. Select image >> create image.
 
 
-Name        : ClaruswayAMI_4
-Description : ClaruswayAMI_4
+Name        : AMI_4
+Description : AMI_4
 
 
 44. Click the `launch instance` tab.
 
 45. Click `myAMI` from left-hand menu
 
-46. Select `ClaruswayAMI_4`
+46. Select `AMI_4`
 
 47. Launch instance.
 
 
-Name        : ClaruswayAMI_5
+Name        : veysel-AMI_5
 Description : ClaruswayAMI_5
 
 
-48. Connect to `ClaruswayAMI_5` with SSH. Dont forget to connect with "ec2-user" ıf you copy from the conncet tab you'll see "root@...."
+48. Connect to `veysel-AMI_5` with SSH. Dont forget to connect with "ec2-user" ıf you copy from the conncet tab you'll see "root@...."
 
 49. Show `i_am_here.txt` with `ls`.
 
