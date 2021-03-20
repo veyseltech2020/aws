@@ -20,15 +20,15 @@
 - Click the `Create Security Group`.
 
 ```text
-Security Group Name  : EC2 SecGrp
-Description          : EC2 SecGrp
+Security Group Name  : EC2-Sec-Grp
+Description          : EC2 Sec Grp
 VPC                  : Default VPC
 Inbound Rules:
     - Type: SSH ----> Source: Anywhere
 Outbound Rules: Keep it as default
 Tag:
     - Key   : Name
-      Value : EC2 SecGrp
+      Value : EC2-Sec-Grp
 ```
 
 ### Step 2 - Create EFS SecGrp:
@@ -36,15 +36,15 @@ Tag:
 - Click the `Create Security Group`.
 
 ```text
-Security Group Name  : EFS SecGrp
-Description          : EFS SecGrp
+Security Group Name  : EFS-Sec-Grp
+Description          : EFS Sec Grp
 VPC                  : Default VPC
 ***Inbound Rules:
     - Type: NFS ----> Port: 2049 ------>Source: sg-EC2 SecGrp
 Outbound Rules: Keep it as default
 Tag:
     - Key   : Name
-      Value : EFS SecGrp
+      Value : EFS-Sec-Grp
 ```
 
 ### Step 3 - Create EC2 :
@@ -56,8 +56,8 @@ AMI             : Amazon Linux 2
 Instance Type   : t2.micro
 Network         : default
 Subnet          : default
-Security Group  : EC2 SecGrp
-    Sec.Group Name : EC2 SecGrp
+Security Group  : EC2-Sec-Grp
+    Sec.Group Name : EC2-Sec-Grp
 Tag             :
     Key         : Name
     Value       : EC2-1
@@ -70,8 +70,8 @@ AMI             : Amazon Linux 2
 Instance Type   : t2.micro
 Network         : default
 Subnet          : default
-Security Group  : EC2 SecGrp
-    Sec.Group Name : EC2 SecGrp
+Security Group  : EC2-Sec-Grp
+    Sec.Group Name : EC2-Sec-Grp
 Tag             :
     Key         : Name
     Value       : EC2-2
@@ -89,7 +89,7 @@ Open the Amazon EFS console at https://console.aws.amazon.com/efs/.
 
 General
 
-Name                    : FirstEFS
+Name                    : MyFirstEFS
 
 Automatic backups       : Unchecked "Enable automatic backups"
 
@@ -154,7 +154,7 @@ sudo yum install -y amazon-efs-utils
 sudo mkdir efs
 ```
 
-- Go to the EFS console and click  on "FirstEFS" . Then click "Attach" button seen top of the "EFS" page.
+- Go to the EFS console and click  on "MyFirstEFS" . Then click "Attach" button seen top of the "EFS" page.
 
 - On the pop up window, copy the script seen under "Using the EFS mount helper" option: "sudo mount -t efs -o tls fs-60d485e2:/ efs"
 
@@ -209,7 +209,7 @@ sudo yum install -y amazon-efs-utils
 sudo mkdir efs
 ```
 
-- Go to the EFS console and click  on "FirstEFS" . Then click "Attach" button seen top of the "EFS" page.
+- Go to the EFS console and click  on "MyFirstEFS" . Then click "Attach" button seen top of the "EFS" page.
 
 - On the pop up window, copy the script seen under "Using the EFS mount helper" option: "sudo mount -t efs -o tls fs-60d485e2:/ efs"
 
@@ -265,8 +265,8 @@ Instance Type   : t2.micro
 Network         : default
 **File systems  :Add file system-------> FirstEFS (Note down the mnt point "/mnt/efs/fs1")
 Subnet          : default
-Security Group  : EC2 SecGrp
-    Sec.Group Name : EC2 SecGrp
+Security Group  : EC2-Sec-Grp
+    Sec.Group Name : EC2-Sec-Grp
 Tag             :
     Key         : Name
     Value       : EC2-3
